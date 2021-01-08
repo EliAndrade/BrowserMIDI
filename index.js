@@ -146,7 +146,7 @@ let keys = {
 }
 
 document.body.onkeydown = function (e) {
-    if (e.code in keys) {
+    if (e.code in keys && !e.repeat) {
         noteOn(keys[e.code] + FIRST_NOTE + 24);
     }
 }
