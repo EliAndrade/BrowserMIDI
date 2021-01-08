@@ -1,6 +1,34 @@
-var colors = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0]
-var audios = {}
+let colors = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0]
+let audios = {}
 
+let FIRST_NOTE = 24;
+let OCTAVES = 6;
+
+function noteOn(note) {
+    if (note > 9 && note < 96) {
+        audios[note].pause();
+        audios[note].currentTime = 0;
+        audios[note].play();
+
+        const pkeys = piano.children;
+        if (note >= FIRST_NOTE && note <= FIRST_NOTE + 12 * OCTAVES) {
+            let isBlack = colors[(note - FIRST_NOTE) % 12] == 1;
+            pkeys[note - FIRST_NOTE].className = isBlack ? "black_key_pressed" : "white_key_pressed";
+        }
+    }
+}
+
+function noteOff(note) {
+    if (note > 9 && note < 96) {
+        audios[note].pause();
+
+        const pkeys = piano.children;
+        if (note >= FIRST_NOTE && note <= FIRST_NOTE + 12 * OCTAVES) {
+            let isBlack = colors[(note - FIRST_NOTE) % 12] == 1;
+            pkeys[note - FIRST_NOTE].className = isBlack ? "black_key" : "white_key";
+        }
+    }
+}
 
 const piano = document.getElementById('piano');
 
@@ -13,17 +41,11 @@ for (let i = 0; i < 12 * 6; i++) {
     piano.append(key);
 
     key.onmouseenter = function () {
-        audios[i+24].pause();
-        audios[i+24].currentTime = 0;
-        audios[i+24].play();
-
-        key.className = colors[i%12] == 1 ? "black_key_pressed" : "white_key_pressed";
+        noteOn(i + FIRST_NOTE);
     }
 
     key.onmouseleave = function () {
-        audios[i+24].pause();
-
-        key.className = colors[i % 12] == 1 ? "black_key" : "white_key";;
+        noteOff(i + FIRST_NOTE);
     }
 }
 document.body.append(piano);
@@ -71,10 +93,7 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
 
 navigator.requestMIDIAccess({ sysex: true })
     .then(function (access) {
-
-        // Get lists of available MIDI controllers
         const inputs = access.inputs;
-        const outputs = access.outputs;
 
         for (let [key, value] of inputs) {
             value.onmidimessage = function (e) {
@@ -82,24 +101,60 @@ navigator.requestMIDIAccess({ sysex: true })
                 let note = e.data[1];
 
                 if (note >= 9 && note <= 96) {
-                    const pkeys = piano.children;
-
                     if (on) {
-                        audios[note].pause();
-                        audios[note].currentTime = 0;
-                        audios[note].play();
-
-                        if (note >= 24 && note <= 24+12*6) {
-                            pkeys[note - 24].className = colors[(note-24) % 12] == 1 ? "black_key_pressed" : "white_key_pressed";
-                        }
+                        noteOn(note);
                     } else {
-                        audios[note].pause();
-
-                        if (note >= 24 && note <= 24+12*6) {
-                            pkeys[note - 24].className = colors[(note-24) % 12] == 1 ? "black_key" : "white_key";
-                        }
+                        noteOff(note);
                     }
                 }
             };
         }
     });
+
+
+let keys = {
+    'KeyQ': 0,
+    'Digit2': 1,
+    'KeyW': 2,
+    'Digit3': 3,
+    'KeyE': 4,
+    'KeyR': 5,
+    'Digit5': 6,
+    'KeyT': 7,
+    'Digit6': 8,
+    'KeyY': 9,
+    'Digit7': 10,
+    'KeyU': 11,
+    'KeyI': 12,
+    'Digit9': 13,
+    'KeyO': 14,
+    'Digit0': 15,
+
+    'KeyP': 12,
+    'KeyS': 13,
+    'KeyX': 14,
+    'KeyD': 15,
+    'KeyC': 16,
+    'KeyV': 17,
+    'KeyG': 18,
+    'KeyB': 19,
+    'KeyH': 20,
+    'KeyN': 21,
+    'KeyJ': 22,
+    'KeyM': 23,
+    'Comma': 24,
+    'KeyL': 25,
+    'Period': 26
+}
+
+document.body.onkeydown = function (e) {
+    if (e.code in keys) {
+        noteOn(keys[e.code] + FIRST_NOTE + 24);
+    }
+}
+
+document.body.onkeyup = function (e) {
+    if (e.code in keys) {
+        noteOff(keys[e.code] + FIRST_NOTE + 24);
+    }
+}
