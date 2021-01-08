@@ -33,9 +33,8 @@ function noteOff(note) {
 const piano = document.getElementById('piano');
 
 
-for (let i = 0; i < 12 * 6; i++) {
+for (let i = 0; i < 12 * OCTAVES; i++) {
     const key = document.createElement('div');
-    key.id = 'piano';
 
     key.className = colors[i % 12] == 1 ? "black_key" : "white_key";
     piano.append(key);
@@ -48,7 +47,6 @@ for (let i = 0; i < 12 * 6; i++) {
         noteOff(i + FIRST_NOTE);
     }
 }
-document.body.append(piano);
 
 
 function load(name) {

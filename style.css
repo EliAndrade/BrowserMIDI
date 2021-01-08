@@ -1,12 +1,20 @@
+body {
+    background-color: rgb(187, 245, 255);
+}
+
 .pianobox {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);   
+    overflow: hidden;
 }
 
 .piano {
-    /* border: 5px solid brown; */
+    border: 5px solid brown;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
 }
 
 .white_key,
@@ -40,4 +48,10 @@
 .white_key_pressed {
     background-color: #999999ff;
     margin-bottom: -2px;
+}
+
+#instrument {
+    margin: auto;
+    padding: auto;
+    display: block;
 }
