@@ -130,7 +130,7 @@ let keys = {
     'KeyO': 14,
     'Digit0': 15,
 
-    'KeyP': 12,
+    'KeyZ': 12,
     'KeyS': 13,
     'KeyX': 14,
     'KeyD': 15,
