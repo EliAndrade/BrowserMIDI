@@ -1,0 +1,43 @@
+.pianobox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.piano {
+    /* border: 5px solid brown; */
+}
+
+.white_key,
+.white_key_pressed {
+    position: relative;
+    background-color: #ffffffff;
+    display: inline-block;
+    height: 100;
+    width: 20;
+    margin: 0 -1px 0 -1px;
+    border: 1px solid black;
+    z-index: 1;
+}
+
+.black_key,
+.black_key_pressed {
+    position: relative;
+    background-color: #333333ff;
+    display: inline-block;
+    height: 50px;
+    width: 14px;
+    margin: 0px -7px 52px -7px;
+    z-index: 10000;
+}
+
+.black_key_pressed {
+    background-color: #000000ff;
+    margin-bottom: 50px;
+}
+
+.white_key_pressed {
+    background-color: #999999ff;
+    margin-bottom: -2px;
+}
