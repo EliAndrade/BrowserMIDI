@@ -78,11 +78,11 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
         var select = document.getElementById("instrument");
 
         if (window.location === window.parent.location) {
-            select.remove();
-        } else {
             document.body.onclick = function () {
                 window.top.location.href = window.location;
             }
+        } else {
+            select.remove();
         }
 
         for (let value in out) {
@@ -93,8 +93,6 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
         }
         select.onchange = function () {
             load(document.getElementById("instrument").value);
-
-
         }
     })
 
