@@ -78,22 +78,21 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
         var select = document.getElementById("instrument");
 
         if (window.location === window.parent.location) {
-            document.body.onclick = function () {
-                window.top.location.href = window.location;
+            for (let value in out) {
+                let option = document.createElement("option");
+                option.value = out[value];
+                option.innerHTML = out[value].replace(/_/g, " ");
+                select.append(option);
+            }
+            select.onchange = function () {
+                load(document.getElementById("instrument").value);
             }
         } else {
             select.remove();
-        }
-
-        for (let value in out) {
-            let option = document.createElement("option");
-            option.value = out[value];
-            option.innerHTML = out[value].replace(/_/g, " ");
-            select.append(option);
-        }
-        select.onchange = function () {
-            load(document.getElementById("instrument").value);
-        }
+            document.body.onclick = function () {
+                window.top.location.href = window.location;
+            }
+        } 
     })
 
 
