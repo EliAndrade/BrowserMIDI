@@ -79,7 +79,7 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
         for (let value in out) {
             let option = document.createElement("option");
             option.value = out[value];
-            option.innerHTML = out[value].replace("_", " ");
+            option.innerHTML = out[value].replace("_/g", " ");
             select.append(option);
         }
         select.onchange = function () {
