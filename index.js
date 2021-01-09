@@ -88,6 +88,7 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
             } else {
                 select.remove();
                 document.body.onclick = function () {
+                    window.parent.location = window.location;
                     window.location = window.location;
                 }
             }            
