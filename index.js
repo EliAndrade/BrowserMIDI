@@ -79,7 +79,7 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
         for (let value in out) {
             let option = document.createElement("option");
             option.value = out[value];
-            option.innerHTML = out[value].replace("_/g", " ");
+            option.innerHTML = out[value].replace(_/g, " ");
             select.append(option);
         }
         select.onchange = function () {
@@ -88,8 +88,7 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
             } else {
                 select.remove();
                 document.body.onclick = function () {
-                    window.parent.location = window.location;
-                    window.location = window.location;
+                    window.top.location.href = window.location;
                 }
             }            
         }
