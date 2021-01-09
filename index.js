@@ -75,8 +75,16 @@ load('lead_3_calliope');
 fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
     .then(res => res.json())
     .then((out) => {
-        select.remove();
         var select = document.getElementById("instrument");
+
+        if (window.location === window.parent.location) {
+            select.remove();
+        } else {
+            document.body.onclick = function () {
+                window.top.location.href = window.location;
+            }
+        }
+
         for (let value in out) {
             let option = document.createElement("option");
             option.value = out[value];
@@ -84,13 +92,9 @@ fetch('https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/names.json')
             select.append(option);
         }
         select.onchange = function () {
-            if ( window.location === window.parent.location ) {
-                load(document.getElementById("instrument").value);
-            } else {
-                document.body.onclick = function () {
-                    window.top.location.href = window.location;
-                }
-            }            
+            load(document.getElementById("instrument").value);
+
+
         }
     })
 
